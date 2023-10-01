@@ -11,7 +11,9 @@ class LinkedList:
     def get_node_at_index(self, index):
         temp = self._first
         for i in range(index):
-            temp = temp._next
+            if not temp == None:
+                temp = temp._next
+            else: break
         return temp
 
     def append(self, value):
@@ -84,8 +86,9 @@ class LinkedList:
         #     curr_node = curr_node._next
         #     index -= 1
 
-
         curr_node = list.get_node_at_index(index)
+
+        if curr_node == None: return
 
         x = curr_node._previous
         curr_node._previous = new_node
@@ -107,6 +110,9 @@ class LinkedList:
         #     index -= 1
 
         curr_node = list.get_node_at_index(index)
+
+        if curr_node == None: return
+
         x = curr_node._previous
         y = curr_node._next
         
