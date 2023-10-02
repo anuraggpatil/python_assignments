@@ -92,11 +92,23 @@ class ATM:
                 account.withdraw_money_from_overdraft(amount)
         except:
             print('<invalid_account_details>')
+    
+    def transfer_money(self, account1, password, amount, account2):
+        try:
+            self.withdraw_money(account1, password, amount)
+            account2.deposit_money(amount)
+        except:
+            print('<invalid_account_details>')
+            
 
 
 icici = Bank('ICICI')
 
 a1 = icici.open_account('Vivek', 'p@ss', 50000, 'Savings')
+a2 = icici.open_account('Sanjay', 'p@ss', 50000, 'Overdraft')
 atm = ATM()
 atm.withdraw_money(a1, 'p@ss', 20000)
+atm.transfer_money(a2, 'p@ss', 10000, a1)
+
 atm.get_account_info(a1)
+atm.get_account_info(a2)
