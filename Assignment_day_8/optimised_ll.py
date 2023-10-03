@@ -16,15 +16,15 @@ class LinkedList:
 
 
     def _append(self, value):
-        if self._first==None: # list is empty
-            self._first=Node(value)
-            self._tail = self._first
-        else: # add to the end of a non-empty list
-            n=self._first
-            while n._next:
-                n=n._next
-            n._next=Node(value, previous=n)
-            self._tail = n._next
+        
+        new_node = Node(value)
+        if self._last == None:
+            self._first = new_node
+            self._last = self._first
+        else:
+            self._last._next = new_node
+            new_node._previous = self._last
+            self._last = new_node
 
     #def info(self):
     def __str__(self):
@@ -46,6 +46,14 @@ class LinkedList:
             c+=1
             n=n._next
         return c
+
+    def __contains__(self, item):
+        ptr = self._first
+        while ptr:
+            if ptr._value == item:
+                return True
+            ptr = ptr._next
+        return False
 
     def __locate(self,index):
         if index>=len(self):
@@ -85,6 +93,11 @@ class LinkedList:
 
     def remove(self, index):
         n=self.__locate(index)
+
+        if self._first == self._last:
+            self._first = None
+            self._last = None
+            return n._value
         
         x= n._previous
         y= n._next
@@ -96,13 +109,29 @@ class LinkedList:
 
         if y:
             y._previous=x
+        else:
+            self._last = self._last._previous
+            self._last._next = None
         return n._value
     
-    def add_to_end(self, val):
-        new_node = Node(val)
-        if self._tail == None:
-            self._first = new_node
-            self._tail = self._first
-        else:
-            self._tail._next = new_node
-            new_node._previous = self._tail
+    def count(self, element):
+        count = 0
+        ptr = self._first
+        while ptr:
+            if ptr._value == element: count+=1
+            ptr = ptr._next
+        return count
+    
+list = LinkedList(1, 3, 4)
+list.append(2, 5, 7, 1)
+
+print(6 in list)
+
+# while list:
+#     print(f'removed {list.remove(0)} from list')
+
+i = list._first
+while i:
+    print(i._value, end=' ')
+    i = i._next
+print()
