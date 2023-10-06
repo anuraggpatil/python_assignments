@@ -1,10 +1,7 @@
 
-cached_data = dict()
-
 def cached(fn_target):
-
+    cached_data = dict()
     def inner(*args, **kwargs):
-        global cached_data
 
         if args[0] in cached_data:
             result = cached_data[args[0]]
